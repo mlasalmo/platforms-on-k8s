@@ -29,7 +29,6 @@ type RoutesConfig struct{
 	Routes map[string][]string `yaml:"routes"`
 }
 
-
 /*
     routes:
       "dev.knative.apiserver.resource.add":
@@ -90,7 +89,6 @@ func main() {
 			continue
 		}
 
-
 		routed := routeCloudEvent(event)
 		if routed == 0 {
 			level.Debug(logger).Log("Event ignored, there is no routing rule defined", event.Type())
@@ -101,7 +99,6 @@ func main() {
 	}
 
 	CheckError(err)
-
 }
 
 // routeCloudEvent based on different parameters that users can set using the environment variable CE_ROUTES
@@ -131,8 +128,6 @@ func routeCloudEvent(event event.Event) int {
 		eventsRouted++
 	}
 	return eventsRouted
-
-
 }
 
 func ReadRoutesConfigFromEnvString(routesContent string) (RoutesConfig, error){
@@ -147,7 +142,5 @@ func ReadRoutesConfigFromEnvString(routesContent string) (RoutesConfig, error){
 
 	level.Debug(logger).Log("Routes Definitions: ", fmt.Sprintf("%+v\n", routesDefinition))
 
-
 	return routesDefinition, nil
 }
-

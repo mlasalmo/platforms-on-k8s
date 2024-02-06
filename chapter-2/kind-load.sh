@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 docker pull bitnami/redis:7.0.11-debian-11-r12
 docker pull bitnami/postgresql:15.3.0-debian-11-r17
 docker pull bitnami/kafka:3.4.1-debian-11-r0

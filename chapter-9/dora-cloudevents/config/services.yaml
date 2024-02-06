@@ -1,4 +1,4 @@
-
+---
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
@@ -8,13 +8,12 @@ spec:
   template:
     spec:
       containers:
-        - image: ko://function-api-server-to-service-deployment.go
-          env:
-            - name: CDEVENTS_ENDPOINT_URL
-              value: http://cdevents-raw-endpoint.dora-cloudevents.svc.cluster.local
+      - image: ko://function-api-server-to-service-deployment.go
+        env:
+        - name: CDEVENTS_ENDPOINT_URL
+          value: http://cdevents-raw-endpoint.dora-cloudevents.svc.cluster.local
 
 ---
-
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
@@ -24,19 +23,17 @@ spec:
   template:
     spec:
       containers:
-        - image: ko://cloudevents-endpoint.go
-          env:
-          - name: POSTGRESQL_HOST
-            value: postgresql
-          - name: POSTGRESQL_PASS
-            valueFrom:
-              secretKeyRef:
-                name: postgresql
-                key: postgres-password
-
+      - image: ko://cloudevents-endpoint.go
+        env:
+        - name: POSTGRESQL_HOST
+          value: postgresql
+        - name: POSTGRESQL_PASS
+          valueFrom:
+            secretKeyRef:
+              name: postgresql
+              key: postgres-password
 
 ---
-
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
@@ -46,19 +43,17 @@ spec:
   template:
     spec:
       containers:
-        - image: ko://cdevents-endpoint.go
-          env:
-            - name: POSTGRESQL_HOST
-              value: postgresql
-            - name: POSTGRESQL_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: postgresql
-                  key: postgres-password
-
+      - image: ko://cdevents-endpoint.go
+        env:
+        - name: POSTGRESQL_HOST
+          value: postgresql
+        - name: POSTGRESQL_PASS
+          valueFrom:
+            secretKeyRef:
+              name: postgresql
+              key: postgres-password
 
 ---
-
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
@@ -68,15 +63,15 @@ spec:
   template:
     spec:
       containers:
-        - image: ko://deployment-frequency-endpoint.go
-          env:
-            - name: POSTGRESQL_HOST
-              value: postgresql
-            - name: POSTGRESQL_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: postgresql
-                  key: postgres-password
+      - image: ko://deployment-frequency-endpoint.go
+        env:
+        - name: POSTGRESQL_HOST
+          value: postgresql
+        - name: POSTGRESQL_PASS
+          valueFrom:
+            secretKeyRef:
+              name: postgresql
+              key: postgres-password
 
 ---
 apiVersion: v1
@@ -94,7 +89,6 @@ data:
       - http://sockeye.default.svc.cluster.local
 
 ---
-
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -107,47 +101,46 @@ spec:
       template:
         spec:
           containers:
-            - name: cloudevents-router
-              image: ko://cloudevents-router.go
-              imagePullPolicy: IfNotPresent
-              env:
-                - name: CE_ROUTES
-                  valueFrom:
-                    configMapKeyRef:
-                      name: routes
-                      key: ce-routes.yaml
-                - name: POSTGRESQL_HOST
-                  value: postgresql
-                - name: POSTGRESQL_PASS
-                  valueFrom:
-                    secretKeyRef:
-                      name: postgresql
-                      key: postgres-password
+          - name: cloudevents-router
+            image: ko://cloudevents-router.go
+            imagePullPolicy: IfNotPresent
+            env:
+            - name: CE_ROUTES
+              valueFrom:
+                configMapKeyRef:
+                  name: routes
+                  key: ce-routes.yaml
+            - name: POSTGRESQL_HOST
+              value: postgresql
+            - name: POSTGRESQL_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql
+                  key: postgres-password
           restartPolicy: OnFailure
 
 ---
-
- apiVersion: batch/v1
- kind: CronJob
- metadata:
-   name: cdevents-deployment-frequency-cronjob
-   namespace: dora-cloudevents
- spec:
-   schedule: "* * * * *"
-   jobTemplate:
-     spec:
-       template:
-         spec:
-           containers:
-             - name: cdevents-deployment-frequency
-               image: ko://deployment-frequency.go
-               imagePullPolicy: IfNotPresent
-               env:
-                 - name: POSTGRESQL_HOST
-                   value: postgresql
-                 - name: POSTGRESQL_PASS
-                   valueFrom:
-                     secretKeyRef:
-                       name: postgresql
-                       key: postgres-password
-           restartPolicy: OnFailure
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cdevents-deployment-frequency-cronjob
+  namespace: dora-cloudevents
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: cdevents-deployment-frequency
+            image: ko://deployment-frequency.go
+            imagePullPolicy: IfNotPresent
+            env:
+            - name: POSTGRESQL_HOST
+              value: postgresql
+            - name: POSTGRESQL_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql
+                  key: postgres-password
+          restartPolicy: OnFailure

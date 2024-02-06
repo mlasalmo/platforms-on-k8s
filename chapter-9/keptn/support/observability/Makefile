@@ -86,9 +86,9 @@ port-forward-grafana:
 
 .PHONY: import-grafana-dashboard
 import-grafana-dashboard:
-	@echo ""
+	@echo "-------------------------------------------"
 	@echo "Importing Grafana Dashboard and Datasources"
-	@echo ""
+	@echo "-------------------------------------------"
 	curl -X POST --insecure http://admin:admin@localhost:$(GRAFANA_PORT_FORWARD)/api/dashboards/import -H "Content-Type: application/json" -d @./assets/grafana_dashboard_overview.json
 	curl -X POST --insecure http://admin:admin@localhost:$(GRAFANA_PORT_FORWARD)/api/dashboards/import -H "Content-Type: application/json" -d @./assets/grafana_dashboard_workloads.json
 	curl -X POST --insecure http://admin:admin@localhost:$(GRAFANA_PORT_FORWARD)/api/dashboards/import -H "Content-Type: application/json" -d @./assets/grafana_dashboard_applications.json
@@ -102,6 +102,6 @@ uninstall:
 	kubectl delete ns observability --ignore-not-found=true
 	kubectl delete ns monitoring --ignore-not-found=true
 	@echo ""
-	@echo "##########################"
+	@echo "--------------------------"
 	@echo "Observability Demo deleted"
-	@echo "##########################"
+	@echo "--------------------------"

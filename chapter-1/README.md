@@ -2,13 +2,14 @@
 
 ---
 _🌍 Available in_: [English](README.md) | [中文 (Chinese)](README-zh.md) | [Português (Portuguese)](README-pt.md) | [Español](README-es.md)
-> **Note:** Brought to you by the fantastic cloud-native community's [ 🌟 contributors](https://github.com/salaboy/platforms-on-k8s/graphs/contributors)!
+> **Note:** Brought to you by the fantastic cloud-native community's [🌟 contributors](https://github.com/salaboy/platforms-on-k8s/graphs/contributors)!
 
 ---
 
 ## Pre-requisites for the tutorials
 
 You'll need the tools below to follow the step-by-step tutorials linked in the book:
+
 - [Docker](https://docs.docker.com/engine/install/), v24.0.2
 - [kubectl](https://kubernetes.io/docs/tasks/tools/), Client v1.27.3
 - [KinD](https://kind.sigs.k8s.io/docs/user/quick-start/), v0.20.0
@@ -16,7 +17,7 @@ You'll need the tools below to follow the step-by-step tutorials linked in the b
 
 These are technologies and versions used when testing the tutorials.
 
-> [!Warning]
+> [!WARNING]
 > If you want to use other technologies, like [Podman](https://podman.io/) instead of Docker, it should be possible as there is nothing specific to Docker.
 
 ## Conference Application Scenario
@@ -28,6 +29,7 @@ The "Conference Application" walking skeleton implements a straightforward use c
 ![home](imgs/homepage.png)
 
 Check below how the application is commonly used:
+
 1. **C4P:** Potential _speakers_ can submit a new proposal by going to the application's **Call for Proposals** (C4P) section.
    ![proposals](imgs/proposals.png)
 2. **Review & Approval**: Once a proposal is submitted, the conference _organizers_ can review (approve or reject) them by using the **Backoffice** section of the application.
@@ -40,6 +42,7 @@ Check below how the application is commonly used:
 ### An event-driven application
 
 **Every action in the application results in new events being emitted.** For instance, events are emitted:
+
 - when a new proposal is submitted;
 - when the proposal is accepted or rejected;
 - when notifications are sent.

@@ -8,6 +8,6 @@ spec:
       provider: aws
       type: dev
       kind: keyvalue
-  parameters: 
+  parameters:
     size: small
     mockData: false

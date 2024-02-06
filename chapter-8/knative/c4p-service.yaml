@@ -1,44 +1,44 @@
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
-  name: c4p-service 
+  name: c4p-service
 spec:
   template:
     spec:
       containers:
-        - image: salaboy/c4p-service-a3dc0474cbfa348afcdf47a8eee70ba9:v1.0.0
-          env:
-          - name: KAFKA_URL
-            value: kafka.default.svc.cluster.local
-          - name: POSTGRES_HOST
-            value: postgresql.default.svc.cluster.local
-          - name: POSTGRES_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: postgresql
-                key: postgres-password   
-          - name: AGENDA_SERVICE_URL
-            value: http://agenda-service.default.svc.cluster.local
-          - name: NOTIFICATIONS_SERVICE_URL
-            value: http://notifications-service.default.svc.cluster.local  
-          - name: POD_NODENAME
-            valueFrom:
-              fieldRef:
-                fieldPath: spec.nodeName
-          - name: POD_NAME
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.name
-          - name: POD_NAMESPACE
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.namespace
-          - name: POD_IP
-            valueFrom:
-              fieldRef:
-                fieldPath: status.podIP
-          - name: POD_SERVICE_ACCOUNT
-            valueFrom:
-              fieldRef:
-                fieldPath: spec.serviceAccountName    
+      - image: salaboy/c4p-service-a3dc0474cbfa348afcdf47a8eee70ba9:v1.0.0
+        env:
+        - name: KAFKA_URL
+          value: kafka.default.svc.cluster.local
+        - name: POSTGRES_HOST
+          value: postgresql.default.svc.cluster.local
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgresql
+              key: postgres-password
+        - name: AGENDA_SERVICE_URL
+          value: http://agenda-service.default.svc.cluster.local
+        - name: NOTIFICATIONS_SERVICE_URL
+          value: http://notifications-service.default.svc.cluster.local
+        - name: POD_NODENAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: POD_SERVICE_ACCOUNT
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.serviceAccountName
 

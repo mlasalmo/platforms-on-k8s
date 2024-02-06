@@ -8,6 +8,5 @@ spec:
       provider: aws
       type: dev
       kind: kafka
-  parameters: 
+  parameters:
     size: small
-     

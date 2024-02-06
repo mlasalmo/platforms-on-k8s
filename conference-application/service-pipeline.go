@@ -181,7 +181,7 @@ func publishService(ctx context.Context, client *dagger.Client, dir string, plat
 			PlatformVariants: platformVariants,
 		})
 	if err != nil {
-		fmt.Println("Publishing error: %v ", err)
+		fmt.Printf("Publishing error: %v ", err)
 		return err
 	}
 	fmt.Println("published multi-platform image with digest", imageDigest)
@@ -202,7 +202,7 @@ func main() {
 	switch os.Args[1] {
 	case "build":
 		if len(os.Args) < 3 {
-			err = fmt.Errorf("invalid number of arguments: expected service path and tag")
+			_ = fmt.Errorf("invalid number of arguments: expected service path and tag")
 			break
 		}
 		_, err = buildService(ctx, client, os.Args[2])

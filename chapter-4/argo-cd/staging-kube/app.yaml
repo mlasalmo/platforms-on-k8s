@@ -287,7 +287,7 @@ metadata:
   name: c4p-init-sql
   namespace: default
 data:
-  init.sql: |- 
+  init.sql: |-
     CREATE TABLE proposals( id VARCHAR PRIMARY KEY NOT NULL, title VARCHAR NOT NULL, description TEXT NOT NULL, author VARCHAR NOT NULL, email VARCHAR NOT NULL, approved boolean, status VARCHAR NOT NULL);
 ---
 # Source: conference-app/charts/kafka/templates/svc-headless.yaml
@@ -419,8 +419,8 @@ metadata:
     helm.sh/chart: redis-17.11.3
     app.kubernetes.io/instance: conference
     app.kubernetes.io/managed-by: Helm
-  annotations:
-    
+  annotations: {}
+
 spec:
   type: ClusterIP
   clusterIP: None
@@ -558,7 +558,7 @@ spec:
         - name: POD_SERVICE_ACCOUNT
           valueFrom:
             fieldRef:
-              fieldPath: spec.serviceAccountName      
+              fieldPath: spec.serviceAccountName
         livenessProbe:
           httpGet:
             path: /health/readiness
@@ -593,7 +593,7 @@ spec:
         - name: AGENDA_SERVICE_URL
           value: http://agenda-service.default.svc.cluster.local
         - name: NOTIFICATIONS_SERVICE_URL
-          value: http://notifications-service.default.svc.cluster.local  
+          value: http://notifications-service.default.svc.cluster.local
         - name: KAFKA_URL
           value: conference-kafka.default.svc.cluster.local
         - name: POSTGRES_HOST
@@ -602,7 +602,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: conference-postgresql
-              key: postgres-password 
+              key: postgres-password
         - name: POD_NODENAME
           valueFrom:
             fieldRef:
@@ -622,7 +622,7 @@ spec:
         - name: POD_SERVICE_ACCOUNT
           valueFrom:
             fieldRef:
-              fieldPath: spec.serviceAccountName       
+              fieldPath: spec.serviceAccountName
         livenessProbe:
           httpGet:
             path: /health/readiness
@@ -661,7 +661,7 @@ spec:
         - name: C4P_SERVICE_URL
           value: http://c4p-service.default.svc.cluster.local
         - name: NOTIFICATIONS_SERVICE_URL
-          value: http://notifications-service.default.svc.cluster.local  
+          value: http://notifications-service.default.svc.cluster.local
         - name: KAFKA_URL
           value: conference-kafka.default.svc.cluster.local
         - name: POD_NODENAME
@@ -683,7 +683,7 @@ spec:
         - name: POD_SERVICE_ACCOUNT
           valueFrom:
             fieldRef:
-              fieldPath: spec.serviceAccountName  
+              fieldPath: spec.serviceAccountName
         livenessProbe:
           httpGet:
             path: /health/readiness
@@ -736,7 +736,7 @@ spec:
         - name: POD_SERVICE_ACCOUNT
           valueFrom:
             fieldRef:
-              fieldPath: spec.serviceAccountName      
+              fieldPath: spec.serviceAccountName
         livenessProbe:
           httpGet:
             path: /health/readiness
@@ -782,12 +782,12 @@ spec:
         app.kubernetes.io/component: kafka
       annotations:
     spec:
-      
+
       hostNetwork: false
       hostIPC: false
       affinity:
         podAffinity:
-          
+
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
             - podAffinityTerm:
@@ -799,7 +799,7 @@ spec:
                 topologyKey: kubernetes.io/hostname
               weight: 1
         nodeAffinity:
-          
+
       securityContext:
         fsGroup: 1001
       serviceAccountName: conference-kafka
@@ -825,7 +825,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
             - name: KAFKA_CFG_ZOOKEEPER_CONNECT
-              value: 
+              value:
             - name: KAFKA_INTER_BROKER_LISTENER_NAME
               value: "INTERNAL"
             - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
@@ -987,10 +987,10 @@ spec:
         app.kubernetes.io/component: primary
     spec:
       serviceAccountName: default
-      
+
       affinity:
         podAffinity:
-          
+
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
             - podAffinityTerm:
@@ -1002,7 +1002,7 @@ spec:
                 topologyKey: kubernetes.io/hostname
               weight: 1
         nodeAffinity:
-          
+
       securityContext:
         fsGroup: 1001
       hostNetwork: false
@@ -1080,7 +1080,7 @@ spec:
                 - /bin/sh
                 - -c
                 - -e
-                
+
                 - |
                   exec pg_isready -U "postgres" -h 127.0.0.1 -p 5432
                   [ -f /opt/bitnami/postgresql/tmp/.initialized ] || [ -f /bitnami/postgresql/.initialized ]
@@ -1149,13 +1149,13 @@ spec:
         checksum/scripts: 9ee18702a257c8abe144b94039ee8ef8efe27697b95035cbb1a2388e230252ab
         checksum/secret: 972375d97a8a23f0e5842c8d468d69555cf47e80fae4044370455ae7a44b62eb
     spec:
-      
+
       securityContext:
         fsGroup: 1001
       serviceAccountName: conference-redis
       affinity:
         podAffinity:
-          
+
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
             - podAffinityTerm:
@@ -1167,7 +1167,7 @@ spec:
                 topologyKey: kubernetes.io/hostname
               weight: 1
         nodeAffinity:
-          
+
       terminationGracePeriodSeconds: 30
       containers:
         - name: redis

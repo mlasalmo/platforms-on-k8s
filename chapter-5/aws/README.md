@@ -12,9 +12,9 @@ In this step-by-step tutorial, we will use Crossplane to Provision Redis, Postgr
 
 ## Installing Crossplane
 
-To install Crossplane, you need to have a Kubernetes Cluster; you can create one using KinD as we did for you [Chapter 2](../chapter-2/README.md#creating-a-local-cluster-with-kubernetes-kind). 
+To install Crossplane, you need to have a Kubernetes Cluster; you can create one using KinD as we did for you [Chapter 2](../chapter-2/README.md#creating-a-local-cluster-with-kubernetes-kind).
 
-Let's install [Crossplane](https://crossplane.io) into its own namespace using Helm: 
+Let's install [Crossplane](https://crossplane.io) into its own namespace using Helm:
 
 ```shell
 helm repo add crossplane-stable https://charts.crossplane.io/stable
@@ -23,19 +23,20 @@ helm repo update
 helm install crossplane --namespace crossplane-system --create-namespace crossplane-stable/crossplane --wait
 ```
 
-Install the `kubectl crossplane` plugin: 
+Install the `kubectl crossplane` plugin:
 
 ```shell
 curl -sL https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh | sh
 sudo mv kubectl-crossplane /usr/local/bin
 ```
 
-Then install the Crossplane AWS provider: 
+Then install the Crossplane AWS provider:
+
 ```shell
 kubectl crossplane install provider crossplane/provider-aws:v0.21.2
 ```
 
-After a few seconds, if you check the configured providers, you should see the Helm `INSTALLED` and `HEALTHY`: 
+After a few seconds, if you check the configured providers, you should see the Helm `INSTALLED` and `HEALTHY`:
 
 ```shell
 > kubectl get providers.pkg.crossplane.io
@@ -47,7 +48,7 @@ Now we are ready to install our Databases and Message Brokers Crossplane composi
 
 ## App Infrastructure on demand using Crossplane Compositions
 
-We need to install our Crossplane Compositions for our Key-Value Database (Redis), our SQL Database (PostgreSQL) and our Message Broker(Kafka). 
+We need to install our Crossplane Compositions for our Key-Value Database (Redis), our SQL Database (PostgreSQL) and our Message Broker(Kafka).
 
 ```shell
 kubectl apply -f resources/
@@ -55,17 +56,17 @@ kubectl apply -f resources/
 
 The Crossplane Composition resource (`app-database-redis.yaml`) defines which cloud resources need to be created and how they must be configured together. The Crossplane Composite Resource Definition (XRD) (`app-database-resource.yaml`) defines a simplified interface that enables application development teams to quickly request new databases by creating resources of this type.
 
-Check the [resources/](resources/) directory for the Compositions and the Composite Resource Definitions (XRDs). 
+Check the [resources/](resources/) directory for the Compositions and the Composite Resource Definitions (XRDs).
 
 Create a text file containing the AWS account aws_access_key_id and aws_secret_access_key.
 
 ```text
 [default]
-aws_access_key_id = 
-aws_secret_access_key = 
+aws_access_key_id =
+aws_secret_access_key =
 ```
 
-Create a Kubernetes secret with the AWS credentials. 
+Create a Kubernetes secret with the AWS credentials.
 
 ```shell
 kubectl create secret \
@@ -74,7 +75,7 @@ generic aws-secret \
 --from-file=creds=./aws-credentials.txt
 ```
 
-Create a ProviderConfig 
+Create a ProviderConfig
 
 ```shell
 cat <<EOF | kubectl apply -f -
@@ -94,7 +95,7 @@ EOF
 
 ### Let's provision Application Infrastructure
 
-We can provision a new Key-Value Database for our team to use by executing the following commands to create all the infrastructure necessary: 
+We can provision a new Key-Value Database for our team to use by executing the following commands to create all the infrastructure necessary:
 
 ```shell
 kubectl apply -f my-db-keyvalue.yaml
@@ -114,7 +115,8 @@ helm install conference oci://registry-1.docker.io/salaboy/conference-app --vers
 
 Make sure to fill in the commented out aspects of the yaml file based off values from newly created AWS infrastructure.
 
-The `app-values.yaml` content looks like this: 
+The `app-values.yaml` content looks like this:
+
 ```shell
 install:
   infrastructure: false
@@ -124,17 +126,17 @@ frontend:
 agenda:
   kafka:
     url: #aws-kafka-endpoint
-  redis: 
+  redis:
     host: #aws-redis-endpoint
     secretName: #aws-redis-password
-c4p: 
+c4p:
   kafka:
     url: #aws-kafka-endpoint
   postgresql:
     host: #aws-psql-endpoint
     secretName: #aws-psql-secret
 
-notifications: 
+notifications:
   kafka:
     url: #aws-kafka-endpoint
 ```

@@ -8,7 +8,6 @@ spec:
       provider: aws
       type: dev
       kind: sql
-  parameters: 
+  parameters:
     size: small
     mockData: false
-     

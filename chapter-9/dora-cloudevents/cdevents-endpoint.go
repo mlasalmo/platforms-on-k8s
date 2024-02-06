@@ -90,5 +90,3 @@ func receiveCDevent(event cloudevents.Event) {
 	CheckError(e)
 
 }
-
-

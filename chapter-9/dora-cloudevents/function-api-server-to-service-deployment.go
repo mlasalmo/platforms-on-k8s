@@ -26,11 +26,7 @@ type APIServerSourceEventData struct {
 	InvolvedObject InvolvedObject
 }
 
-
-
-
 var cdEventsEndpoint = os.Getenv("CDEVENTS_ENDPOINT_URL")
-
 
 var logger = log.NewLogfmtLogger(os.Stdout)
 
@@ -102,12 +98,6 @@ func receive(event cloudevents.Event) {
 			if result := ceSenderClient.Send(ctx, *ce); cloudevents.IsUndelivered(result) {
 				level.Debug(logger).Log("failed to send:", result)
 			}
-
 		}
-
 	}
-
-
 }
-
-

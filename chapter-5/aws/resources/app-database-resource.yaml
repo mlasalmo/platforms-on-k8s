@@ -8,8 +8,8 @@ spec:
     kind: Database
     plural: databases
     shortNames:
-      - "db"
-      - "dbs"
+    - "db"
+    - "dbs"
   versions:
   - additionalPrinterColumns:
     - jsonPath: .spec.parameters.size
@@ -17,7 +17,7 @@ spec:
       type: string
     - jsonPath: .spec.parameters.mockData
       name: MOCKDATA
-      type: boolean  
+      type: boolean
     - jsonPath: .spec.compositionSelector.matchLabels.kind
       name: KIND
       type: string
@@ -30,15 +30,15 @@ spec:
         properties:
           spec:
             type: object
-            properties: 
-              parameters: 
+            properties:
+              parameters:
                 type: object
                 properties:
                   size:
-                    type: string 
-                  mockData: 
+                    type: string
+                  mockData:
                     type: boolean
-                required:   
+                required:
                 - size
-            required: 
-            - parameters     
+            required:
+            - parameters

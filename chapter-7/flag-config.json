@@ -14,7 +14,7 @@
         "on": true,
         "off": false
       },
-      "defaultVariant": "on"  
+      "defaultVariant": "on"
     },
     "eventsEnabled": {
       "state": "ENABLED",
@@ -35,7 +35,7 @@
           "c4p-service": false
         }
       },
-      "defaultVariant": "none"
+      "defaultVariant": "all"
     }
   }
 }

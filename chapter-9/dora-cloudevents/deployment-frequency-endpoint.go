@@ -62,7 +62,7 @@ func DeploymentsByDayHandler(writer http.ResponseWriter, request *http.Request) 
 
 	level.Info(logger).Log("DB", "Connected!")
 
-	rows, err := db.Query(`SELECT distinct deploy_name AS NAME, DATE_TRUNC('day', time_created) AS day, 
+	rows, err := db.Query(`SELECT distinct deploy_name AS NAME, DATE_TRUNC('day', time_created) AS day,
 						COUNT(distinct deploy_id) AS deployments FROM deployments GROUP BY deploy_name, day`)
 	CheckError(err)
 
@@ -100,4 +100,3 @@ func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	w.WriteHeader(code)
 	w.Write(response)
 }
-

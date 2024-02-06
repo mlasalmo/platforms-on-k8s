@@ -71,5 +71,3 @@ func receiveCloudEvent(event cloudevents.Event) {
 	CheckError(e)
 
 }
-
-

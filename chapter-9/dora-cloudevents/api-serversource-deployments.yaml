@@ -1,10 +1,10 @@
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: api-server-source-sa
 
---- 
-
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -20,7 +20,6 @@ rules:
   - watch
 
 ---
-
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
@@ -35,40 +34,37 @@ subjects:
   namespace: default
 
 ---
-
 apiVersion: sources.knative.dev/v1
 kind: ApiServerSource
 metadata:
- name: main-api-server-source
+  name: main-api-server-source
 spec:
- serviceAccountName: api-server-source-sa
- mode: Resource
- resources:
-   - apiVersion: v1
-     kind: Event
- sink:
-   ref:
-     apiVersion: serving.knative.dev/v1
-     kind: Service
-     name: cloudevents-raw-endpoint
-     namespace: dora-cloudevents
-
+  serviceAccountName: api-server-source-sa
+  mode: Resource
+  resources:
+  - apiVersion: v1
+    kind: Event
+  sink:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: cloudevents-raw-endpoint
+      namespace: dora-cloudevents
 
 ---
-
 apiVersion: sources.knative.dev/v1
 kind: ApiServerSource
 metadata:
- name: sockeye-api-server-source
+  name: sockeye-api-server-source
 spec:
- serviceAccountName: api-server-source-sa
- mode: Resource
- resources:
-   - apiVersion: v1
-     kind: Event
- sink:
-   ref:
-     apiVersion: serving.knative.dev/v1
-     kind: Service
-     name: sockeye
-     namespace: default     
+  serviceAccountName: api-server-source-sa
+  mode: Resource
+  resources:
+  - apiVersion: v1
+    kind: Event
+  sink:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: sockeye
+      namespace: default
